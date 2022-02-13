@@ -3,6 +3,8 @@ import { ThemeProvider } from "styled-components";
 
 import AppContextProvider from "app/context/AppContext";
 
+import CharacterSheet from "app/components/CharacterSheet";
+
 import { color } from "styles/theme";
 import { OutsideWrapper, MiddleWrapper, InnerContent } from "./styles";
 
@@ -11,7 +13,9 @@ const App = () => (
     <AppContextProvider>
       <OutsideWrapper>
         <MiddleWrapper>
-          <InnerContent>hi</InnerContent>
+          <InnerContent>
+            <CharacterSheet />
+          </InnerContent>
         </MiddleWrapper>
       </OutsideWrapper>
     </AppContextProvider>

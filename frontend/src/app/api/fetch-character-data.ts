@@ -1,16 +1,8 @@
 import fetchFromTauri from "./base-api";
-import { Endpoints } from "../../enums";
+import { Endpoints } from "enums";
+import { CharacterSheet } from "types/character-sheet";
 
-interface Params {
-  cn: string;
-}
-
-interface Payload {}
-
-const getCharSheet = () => {
-  return fetchFromTauri<Params, Payload>(Endpoints.CharSheet, {
-    cn: "Lowhpspara"
-  });
-};
+const getCharSheet = (name: string) =>
+  fetchFromTauri<CharacterSheet>(Endpoints.CharSheet, name);
 
 export default getCharSheet;
