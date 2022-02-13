@@ -1,16 +1,20 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
 
+import AppContextProvider from "app/context/AppContext";
+
 import { color } from "styles/theme";
 import { OutsideWrapper, MiddleWrapper, InnerContent } from "./styles";
 
 const App = () => (
   <ThemeProvider theme={{ color }}>
-    <OutsideWrapper>
-      <MiddleWrapper>
-        <InnerContent>hi</InnerContent>
-      </MiddleWrapper>
-    </OutsideWrapper>
+    <AppContextProvider>
+      <OutsideWrapper>
+        <MiddleWrapper>
+          <InnerContent>hi</InnerContent>
+        </MiddleWrapper>
+      </OutsideWrapper>
+    </AppContextProvider>
   </ThemeProvider>
 );
 
