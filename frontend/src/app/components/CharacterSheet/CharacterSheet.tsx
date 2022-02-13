@@ -1,8 +1,11 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useState, KeyboardEvent } from "react";
+
+import { getStaticImageUrl } from "util/get-static-image-url";
 
 import { useApp } from "app/context/AppContext";
 
-import { Input, Button } from "./styles";
+import { Button, Input } from "./styles";
+import { ImageSize } from "enums";
 
 const CharSheet: FC = () => {
   const { loadCharacterByName, character } = useApp();
@@ -10,17 +13,48 @@ const CharSheet: FC = () => {
 
   const loadChar = useCallback(() => {
     loadCharacterByName(charName);
-  }, [charName]);
+  }, [charName, loadCharacterByName]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        loadChar();
+      }
+    },
+    [loadChar]
+  );
 
   return (
     <div
       style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
     >
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-        <Input value={charName} onChange={e => setCharName(e.target.value)} />
+        <Input
+          value={charName}
+          onChange={e => setCharName(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
         <Button onClick={loadChar}>Load character</Button>
       </div>
-      {character && <div>{character.tname}</div>}
+      {character && (
+        <>
+          <div style={{ width: "100%", textAlign: "center" }}>
+            {character.tname.length > 0 ? character.tname : character.name}
+          </div>
+          {character.treeIcon_0 && (
+            <img
+              src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
+              alt={character.treeName_0}
+            />
+          )}
+          {character.treeIcon_1 && (
+            <img
+              src={getStaticImageUrl(ImageSize.medium, character.treeIcon_1)}
+              alt={character.treeName_1}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };

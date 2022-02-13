@@ -30,4 +30,10 @@ export interface CharacterSheet {
   primary_trade_skill_1: PrimaryTradeSkill;
   primary_trade_skill_2: PrimaryTradeSkill;
   characterStat: CharacterStat;
+  treeName_0?: string;
+  treeIcon_0?: string;
+  talents_0: string;
+  treeName_1?: string;
+  treeIcon_1?: string;
+  talents_1: string;
 }

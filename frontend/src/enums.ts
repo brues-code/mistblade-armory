@@ -85,3 +85,11 @@ export enum Faction {
   Alliance,
   Horde
 }
+
+export enum ImageSize {
+  tiny = "tiny",
+  small = "small",
+  medium = "medium",
+  medium_grayscale = "medium_grayscale",
+  large = "large"
+}
