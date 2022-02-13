@@ -41,6 +41,9 @@ const CharSheet: FC = () => {
           <div style={{ width: "100%", textAlign: "center" }}>
             {character.tname.length > 0 ? character.tname : character.name}
           </div>
+          <div style={{ width: "100%", textAlign: "center" }}>
+            {`Item Level: ${character.avgitemlevel}`}
+          </div>
           {character.treeIcon_0 && (
             <img
               src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
