@@ -4,7 +4,7 @@ const app = express();
 
 import controllers from "../src/controllers/controller";
 
-app.get("/charsheet", (req, res) => controllers.getCharSheet(req, res));
+app.get("/charsheet/:name", (req, res) => controllers.getCharSheet(req, res));
 
 const port = process.env.PORT || 8001;
 

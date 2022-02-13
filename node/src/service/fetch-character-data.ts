@@ -9,9 +9,9 @@ interface Payload {
   realm: Realm;
 }
 
-const getCharSheet = () => {
+const getCharSheet = (name: string) => {
   return fetchFromTauri<Params, Payload>(Endpoints.CharSheet, {
-    cn: "Lowhpspara"
+    cn: name
   });
 };
 

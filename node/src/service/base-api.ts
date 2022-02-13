@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { Realm, Endpoints } from "../../enums";
+import { ApiResponse } from "api-response";
 
 function fetchFromTauri<T, U>(url: Endpoints, params: T) {
   return fetch(
@@ -20,7 +21,8 @@ function fetchFromTauri<T, U>(url: Endpoints, params: T) {
       })
     }
   )
-    .then(response => response.json() as Promise<U>)
+    .then(response => response.json() as Promise<ApiResponse<U>>)
+    .then(result => result.response)
     .catch(console.error);
 }
 
