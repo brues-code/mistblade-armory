@@ -1,8 +1,6 @@
 import { ItemRarity } from "enums";
 import { Enchant } from "./enchant";
 import { Gem } from "./gem";
-import { Skindata } from "./skindata";
-import { ChallengeMode } from "./challenge-mode";
 
 export interface CharacterItem {
   ench: Enchant[];

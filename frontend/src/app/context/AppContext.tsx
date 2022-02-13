@@ -9,7 +9,6 @@ import React, {
 import { CharacterSheet } from "types/character-sheet";
 
 import getCharSheet from "app/api/fetch-character-data";
-import { GemColor } from "enums";
 
 interface State {
   character?: CharacterSheet;
