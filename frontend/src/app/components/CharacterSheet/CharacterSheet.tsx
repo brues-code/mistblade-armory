@@ -83,18 +83,10 @@ const CharSheet: FC = () => {
     []
   );
 
-  return (
-    <SheetWrapper>
-      <InputContainer>
-        <Input
-          value={charName}
-          onChange={e => setCharName(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <Button onClick={loadChar}>Load character</Button>
-      </InputContainer>
-      {character && (
-        <>
+  const renderCharDetails = useCallback(
+    () =>
+      character !== undefined && (
+        <SheetRow>
           <SheetRow>
             <img
               width={36}
@@ -129,10 +121,28 @@ const CharSheet: FC = () => {
               />
             )}
           </SheetRow>
+        </SheetRow>
+      ),
+    [character]
+  );
+
+  return (
+    <SheetWrapper>
+      <InputContainer>
+        <Input
+          value={charName}
+          onChange={e => setCharName(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <Button onClick={loadChar}>Load character</Button>
+      </InputContainer>
+      {character && (
+        <>
           <div
-            style={{ display: "flex", paddingBottom: "8px", width: "256px" }}
+            style={{ display: "flex", paddingBottom: "8px", width: "512px" }}
           >
             <SheetRow>{leftItems.map(renderItem)}</SheetRow>
+            {renderCharDetails()}
             <SheetRow>{rightItems.map(renderItem)}</SheetRow>
           </div>
           <SheetRow style={{ display: "flex", justifyContent: "center" }}>
