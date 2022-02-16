@@ -1,11 +1,19 @@
 import React, { FC, useCallback, useState, KeyboardEvent } from "react";
 
+import { ImageSize } from "enums";
 import { getStaticImageUrl } from "util/get-static-image-url";
+import { getCharacterIcon, getClassIcon } from "styles/assets/load-asset";
 
 import { useApp } from "app/context/AppContext";
+import CharacterItem from "../CharacterItem";
 
-import { Button, Input } from "./styles";
-import { ImageSize } from "enums";
+import {
+  Button,
+  Input,
+  InputContainer,
+  SheetWrapper,
+  SheetRow
+} from "./styles";
 
 const CharSheet: FC = () => {
   const { loadCharacterByName, character } = useApp();
@@ -25,40 +33,55 @@ const CharSheet: FC = () => {
   );
 
   return (
-    <div
-      style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-    >
-      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+    <SheetWrapper>
+      <InputContainer>
         <Input
           value={charName}
           onChange={e => setCharName(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <Button onClick={loadChar}>Load character</Button>
-      </div>
+      </InputContainer>
       {character && (
         <>
-          <div style={{ width: "100%", textAlign: "center" }}>
-            {character.tname.length > 0 ? character.tname : character.name}
-          </div>
-          <div style={{ width: "100%", textAlign: "center" }}>
-            {`Item Level: ${character.avgitemlevel}`}
-          </div>
-          {character.treeIcon_0 && (
+          <SheetRow>
             <img
-              src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
+              width={36}
+              height={36}
+              src={getCharacterIcon(character.race, character.gender)}
               alt={character.treeName_0}
             />
-          )}
-          {character.treeIcon_1 && (
             <img
-              src={getStaticImageUrl(ImageSize.medium, character.treeIcon_1)}
-              alt={character.treeName_1}
+              width={36}
+              height={36}
+              src={getClassIcon(character.class)}
+              alt={character.treeName_0}
             />
+          </SheetRow>
+          <SheetRow>
+            {character.tname.length > 0 ? character.tname : character.name}
+          </SheetRow>
+          <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
+          <SheetRow>
+            {character.treeIcon_0 && (
+              <img
+                src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
+                alt={character.treeName_0}
+              />
+            )}
+            {character.treeIcon_1 && (
+              <img
+                src={getStaticImageUrl(ImageSize.medium, character.treeIcon_1)}
+                alt={character.treeName_1}
+              />
+            )}
+          </SheetRow>
+          {character.characterItems.map(
+            i => i.guid !== 0 && <CharacterItem item={i} key={i.guid} />
           )}
         </>
       )}
-    </div>
+    </SheetWrapper>
   );
 };
 
