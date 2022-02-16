@@ -7,7 +7,14 @@ import {
   Params as GetItemTooltipByGuidParams
 } from "../service/fetch-item-tooltip";
 
-const controllers = {
+type ExpressRoute = (req: Request, res: Response) => void;
+
+export interface Controllers {
+  getCharSheet: ExpressRoute;
+  getItemTooltipByGuid: ExpressRoute;
+}
+
+const controller: Controllers = {
   getCharSheet: (req: Request, res: Response) => {
     const params = (req.params as unknown) as GetCharSheetParams;
     getCharSheet(params.cn).then(r => {
@@ -22,4 +29,4 @@ const controllers = {
   }
 };
 
-export default controllers;
+export default controller;
