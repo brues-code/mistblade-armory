@@ -1,7 +1,10 @@
 import { Express } from "express";
-import controllers from "../controllers/controller";
+import controller, { Controllers } from "../controllers/controller";
 
-export const setRoutes = (app: Express) => {
-  app.get("/charsheet/:cn", controllers.getCharSheet);
-  app.get("/itemtoolbyguid/:i", controllers.getItemTooltipByGuid);
-};
+const routes: Array<{ route: string; controllerFunc: keyof Controllers }> = [
+  { route: "/charsheet/:cn", controllerFunc: "getCharSheet" },
+  { route: "/itemtoolbyguid/:i", controllerFunc: "getItemTooltipByGuid" }
+];
+
+export const setRoutes = (app: Express) =>
+  routes.forEach(r => app.get(r.route, controller[r.controllerFunc]));
