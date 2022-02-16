@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Input = styled.input``;
+export const Input = styled.input`
+  margin-right: 4px;
+`;
 export const Button = styled.button``;
 
 export const InputContainer = styled.div`

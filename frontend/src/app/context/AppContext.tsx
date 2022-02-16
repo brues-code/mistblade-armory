@@ -16,13 +16,15 @@ interface State {
 
 interface ApiProps {
   loadCharacterByName: (name: string) => void;
+  clearCharacter: () => void;
 }
 
 type AppState = State & ApiProps;
 
 const initialState: AppState = {
   character: undefined,
-  loadCharacterByName: () => null
+  loadCharacterByName: () => null,
+  clearCharacter: () => null
 };
 
 export const AppContext = createContext(initialState);
@@ -36,9 +38,11 @@ const AppContextProvider: FC = ({ children }) => {
       .catch(console.log);
   }, []);
 
+  const clearCharacter = useCallback(() => setCharacter(undefined), []);
+
   const contextState: AppState = useMemo(
-    () => ({ character, loadCharacterByName }),
-    [loadCharacterByName, character]
+    () => ({ character, loadCharacterByName, clearCharacter }),
+    [loadCharacterByName, character, clearCharacter]
   );
 
   return (

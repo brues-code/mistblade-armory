@@ -7,7 +7,7 @@ export const OutsideWrapper = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #101113;
   background-size: cover;
 `;
 
@@ -17,8 +17,9 @@ export const MiddleWrapper = styled.div`
 `;
 
 export const InnerContent = styled.div`
-  margin-left: auto;
-  margin-right: auto;
   width: 675px;
   max-width: 100vw;
+  background-color: rgba(242, 242, 242, 1);
+  margin: 0 auto;
+  padding: 16px;
 `;

@@ -1,8 +1,17 @@
-import React, { FC, useCallback, useState, KeyboardEvent } from "react";
+import React, {
+  FC,
+  useCallback,
+  useState,
+  KeyboardEvent,
+  useEffect,
+  useMemo
+} from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { ImageSize } from "enums";
 import { getStaticImageUrl } from "util/get-static-image-url";
 import { getCharacterIcon, getClassIcon } from "styles/assets/load-asset";
+import { CharacterItem as CharacterItemType } from "types/character-item";
 
 import { useApp } from "app/context/AppContext";
 import CharacterItem from "../CharacterItem";
@@ -14,14 +23,26 @@ import {
   SheetWrapper,
   SheetRow
 } from "./styles";
+import { getCharacterRoute } from "util/get-route";
+
+interface SlotProps {
+  item: CharacterItemType;
+  index: number;
+}
 
 const CharSheet: FC = () => {
-  const { loadCharacterByName, character } = useApp();
-  const [charName, setCharName] = useState("");
+  const { name: paramName } = useParams<{ name: string }>();
+  const navigate = useNavigate();
+  const { loadCharacterByName, character, clearCharacter } = useApp();
+  const [charName, setCharName] = useState(paramName || "");
+
+  useEffect(() => {
+    paramName ? loadCharacterByName(paramName) : clearCharacter();
+  }, [loadCharacterByName, paramName, clearCharacter]);
 
   const loadChar = useCallback(() => {
-    loadCharacterByName(charName);
-  }, [charName, loadCharacterByName]);
+    navigate(getCharacterRoute(charName));
+  }, [charName, navigate]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
@@ -30,6 +51,36 @@ const CharSheet: FC = () => {
       }
     },
     [loadChar]
+  );
+
+  const { leftItems, rightItems, bottomItems } = useMemo(() => {
+    let leftArray: Array<SlotProps> = [];
+    let rightArray: Array<SlotProps> = [];
+    let bottomArray: Array<SlotProps> = [];
+
+    if (character) {
+      character.characterItems.forEach((item, index) => {
+        if (index < 8) {
+          leftArray.push({ item, index });
+        } else if (index < 16) {
+          rightArray.push({ item, index });
+        } else {
+          bottomArray.push({ item, index });
+        }
+      });
+    }
+    return {
+      leftItems: leftArray,
+      rightItems: rightArray,
+      bottomItems: bottomArray
+    };
+  }, [character]);
+
+  const renderItem = useCallback(
+    ({ index, item }: SlotProps) => (
+      <CharacterItem key={index} item={item} index={index} />
+    ),
+    []
   );
 
   return (
@@ -50,6 +101,7 @@ const CharSheet: FC = () => {
               height={36}
               src={getCharacterIcon(character.race, character.gender)}
               alt={character.treeName_0}
+              style={{ paddingRight: "8px" }}
             />
             <img
               width={36}
@@ -67,6 +119,7 @@ const CharSheet: FC = () => {
               <img
                 src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
                 alt={character.treeName_0}
+                style={{ paddingRight: "8px" }}
               />
             )}
             {character.treeIcon_1 && (
@@ -76,9 +129,15 @@ const CharSheet: FC = () => {
               />
             )}
           </SheetRow>
-          {character.characterItems.map(
-            i => i.guid !== 0 && <CharacterItem item={i} key={i.guid} />
-          )}
+          <div
+            style={{ display: "flex", paddingBottom: "8px", width: "256px" }}
+          >
+            <SheetRow>{leftItems.map(renderItem)}</SheetRow>
+            <SheetRow>{rightItems.map(renderItem)}</SheetRow>
+          </div>
+          <SheetRow style={{ display: "flex", justifyContent: "center" }}>
+            {bottomItems.map(renderItem)}
+          </SheetRow>
         </>
       )}
     </SheetWrapper>
