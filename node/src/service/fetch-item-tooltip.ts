@@ -2,16 +2,16 @@ import fetchFromTauri from "./base-api";
 import { Endpoints, Realm } from "../../enums";
 
 export interface Params {
-  i: Array<number>;
+  i: number;
 }
 
 interface Payload {
   realm: Realm;
 }
 
-export const getItemTooltipByGuid = (items: Array<number>) => {
+export const getItemTooltipByGuid = (item: Params["i"]) => {
+  console.log("getItemTooltipByGuid: " + item);
   return fetchFromTauri<Params, Payload>(Endpoints.ItemTooltipByGuid, {
-    i: items
+    i: item
   });
 };
-

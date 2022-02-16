@@ -7,6 +7,7 @@ export interface Params {
 }
 
 const getCharSheet = (name: string) => {
+  console.log("getCharSheet: " + name);
   return fetchFromTauri<Params, CharacterSheet>(Endpoints.CharSheet, {
     cn: name
   });
