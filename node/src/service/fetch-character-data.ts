@@ -1,16 +1,13 @@
 import fetchFromTauri from "./base-api";
-import { Endpoints, Realm } from "../../enums";
+import { Endpoints } from "../../enums";
+import { CharacterSheet } from "character-sheet";
 
-interface Params {
+export interface Params {
   cn: string;
 }
 
-interface Payload {
-  realm: Realm;
-}
-
 const getCharSheet = (name: string) => {
-  return fetchFromTauri<Params, Payload>(Endpoints.CharSheet, {
+  return fetchFromTauri<Params, CharacterSheet>(Endpoints.CharSheet, {
     cn: name
   });
 };
