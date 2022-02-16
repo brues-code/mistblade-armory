@@ -1,5 +1,6 @@
 export enum Endpoints {
-  CharSheet = "charsheet"
+  CharSheet = "charsheet",
+  ItemTooltipByGuid = "itemtoolbyguid"
 }
 
 export enum Race {
