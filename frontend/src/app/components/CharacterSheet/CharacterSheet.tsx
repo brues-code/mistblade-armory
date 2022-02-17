@@ -16,14 +16,17 @@ import { getCharacterIcon, getClassIcon } from "styles/assets/load-asset";
 import { CharacterItem as CharacterItemType } from "types/character-item";
 
 import { useApp } from "app/context/AppContext";
-import CharacterItem from "../CharacterItem";
+import CharacterItem from "app/components/CharacterItem";
 
 import {
   Button,
+  CharImage,
   Input,
   InputContainer,
-  SheetWrapper,
-  SheetRow
+  SheetBody,
+  SheetFooter,
+  SheetRow,
+  SheetWrapper
 } from "./styles";
 
 interface SlotProps {
@@ -93,28 +96,40 @@ const CharSheet: FC = () => {
     );
   }, []);
 
-  const renderCharDetails = useCallback(
+  const renderTalentIcons = useMemo(() => {
+    if (!character) {
+      return undefined;
+    }
+    return [0, 1].map(icon => {
+      const treeIcon = character[`treeIcon_${icon}`];
+      return (
+        treeIcon && (
+          <CharImage
+            src={getStaticImageUrl(ImageSize.large, treeIcon)}
+            alt={character[`treeName_${icon}`]}
+          />
+        )
+      );
+    });
+  }, [character]);
+
+  const renderCharDetails = useMemo(
     () =>
       loading ? (
         <LoadingWheel height="100" width="100" />
       ) : errorLoading ? (
-        <SheetRow>Unable to load character</SheetRow>
+        <SheetRow>Unable to load {charName}</SheetRow>
       ) : (
         character && (
           <SheetRow>
             <SheetRow>
-              <img
-                width={36}
-                height={36}
+              <CharImage
                 src={getCharacterIcon(character.race, character.gender)}
-                alt={character.treeName_0}
-                style={{ paddingRight: "8px" }}
+                alt={String(character.race)}
               />
-              <img
-                width={36}
-                height={36}
+              <CharImage
                 src={getClassIcon(character.class)}
-                alt={character.treeName_0}
+                alt={String(character.class)}
               />
             </SheetRow>
             <SheetRow>
@@ -123,31 +138,11 @@ const CharSheet: FC = () => {
             <SheetRow>{`<${character.guildName}>`}</SheetRow>
             <SheetRow>{`Level: ${character.level}`}</SheetRow>
             <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
-            <SheetRow>
-              {character.treeIcon_0 && (
-                <img
-                  src={getStaticImageUrl(
-                    ImageSize.medium,
-                    character.treeIcon_0
-                  )}
-                  alt={character.treeName_0}
-                  style={{ paddingRight: "8px" }}
-                />
-              )}
-              {character.treeIcon_1 && (
-                <img
-                  src={getStaticImageUrl(
-                    ImageSize.medium,
-                    character.treeIcon_1
-                  )}
-                  alt={character.treeName_1}
-                />
-              )}
-            </SheetRow>
+            <SheetRow>{renderTalentIcons}</SheetRow>
           </SheetRow>
         )
       ),
-    [character, loading, errorLoading]
+    [character, loading, errorLoading, charName, renderTalentIcons]
   );
 
   return (
@@ -160,14 +155,12 @@ const CharSheet: FC = () => {
         />
         <Button onClick={loadChar}>Load character</Button>
       </InputContainer>
-      <div style={{ display: "flex", paddingBottom: "8px", width: "512px" }}>
+      <SheetBody>
         <SheetRow>{leftItems.map(renderItem)}</SheetRow>
-        {renderCharDetails()}
+        {renderCharDetails}
         <SheetRow>{rightItems.map(renderItem)}</SheetRow>
-      </div>
-      <SheetRow style={{ display: "flex", justifyContent: "center" }}>
-        {bottomItems.map(renderItem)}
-      </SheetRow>
+      </SheetBody>
+      <SheetFooter>{bottomItems.map(renderItem)}</SheetFooter>
     </SheetWrapper>
   );
 };
