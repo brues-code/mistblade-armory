@@ -7,7 +7,7 @@ import { getEmptySlotIcon } from 'styles/assets/load-asset';
 
 import { useApp } from 'app/context/AppContext';
 
-import { ItemBackground, ItemContainer } from './styles';
+import { ItemBackground, ItemContainer, ItemInformation } from './styles';
 
 interface Props {
     item: CharacterItemType;
@@ -29,6 +29,10 @@ const CharItem: FC<Props> = ({ item, index }) => {
                     alt={item.name}
                 />
             </ItemBackground>
+            <ItemInformation>
+                <div>{item.name}</div>
+                <div>{item.ilevel > 0 && item.ilevel}</div>
+            </ItemInformation>
         </ItemContainer>
     );
 };
