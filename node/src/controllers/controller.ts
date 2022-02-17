@@ -17,9 +17,11 @@ export interface Controllers {
 const controller: Controllers = {
   getCharSheet: (req: Request, res: Response) => {
     const params = (req.params as unknown) as GetCharSheetParams;
-    getCharSheet(params.cn).then(r => {
-      res.json(r);
-    });
+    getCharSheet(params.cn)
+      .then(r => {
+        res.json(r);
+      })
+      .catch(() => res.sendStatus(404));
   },
   getItemTooltipByGuid: (req: Request, res: Response) => {
     const params = (req.params as unknown) as GetItemTooltipByGuidParams;

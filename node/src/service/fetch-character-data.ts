@@ -10,6 +10,9 @@ const getCharSheet = (name: string) => {
   console.log("getCharSheet: " + name);
   return fetchFromTauri<Params, CharacterSheet>(Endpoints.CharSheet, {
     cn: name
+  }).catch(err => {
+    console.error(name + ": " + err.errorstring);
+    throw err;
   });
 };
 

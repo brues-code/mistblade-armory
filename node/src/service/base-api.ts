@@ -22,8 +22,15 @@ function fetchFromTauri<T, U>(url: Endpoints, params: T) {
     }
   )
     .then(response => response.json() as Promise<ApiResponse<U>>)
-    .then(result => result.response)
-    .catch(console.error);
+    .then(result => {
+      if (result.success) {
+        return result.response;
+      }
+      throw result;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
 
 export default fetchFromTauri;
