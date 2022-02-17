@@ -46,3 +46,11 @@ export const SheetFooter = styled(SheetRow)`
     display: flex;
     justify-content: center;
 `;
+
+export const ProfessionIconContainer = styled.div`
+    display: flex;
+    font-size: 13px;
+    font-weight: bold;
+    flex-direction: column;
+    width: 56px;
+`;

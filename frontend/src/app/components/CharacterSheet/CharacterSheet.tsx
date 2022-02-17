@@ -2,19 +2,30 @@ import React, { FC, useCallback, useState, KeyboardEvent, useEffect, useMemo, Re
 import { useParams, useNavigate } from 'react-router-dom';
 import { Oval as LoadingWheel } from 'react-loader-spinner';
 
-import { ImageSize, ItemSlot, TalentTree } from 'enums';
+import { ImageSize, ItemSlot, PrimaryProfessions, TalentTree } from 'enums';
+import { ItemInventoryArrangement } from 'app-constants';
 import { getStaticImageUrl } from 'util/get-static-image-url';
 import { getCharacterRoute } from 'util/get-route';
 import { getCharacterIcon, getClassIcon } from 'styles/assets/load-asset';
 import { CharacterItem as CharacterItemType } from 'types/character-item';
+import { PrimaryTradeSkill } from 'types/primary-trade-skill';
 
 import { useApp } from 'app/context/AppContext';
 import CharacterItem from 'app/components/CharacterItem';
 import Icon from 'app/components/Icon';
 
 import { color } from 'styles/theme';
-import { Button, CharImage, Input, InputContainer, SheetBody, SheetFooter, SheetRow, SheetWrapper } from './styles';
-import { ItemInventoryArrangement } from 'app-constants';
+import {
+    Button,
+    CharImage,
+    Input,
+    InputContainer,
+    ProfessionIconContainer,
+    SheetBody,
+    SheetFooter,
+    SheetRow,
+    SheetWrapper
+} from './styles';
 
 interface SlotProps {
     item: CharacterItemType;
@@ -86,18 +97,43 @@ const CharSheet: FC = () => {
         if (!character) {
             return undefined;
         }
-        return [TalentTree.Primary, TalentTree.Secondary].map(icon => {
-            const treeIcon = character[`treeIcon_${icon}`];
-            return (
-                treeIcon && (
-                    <CharImage
-                        key={treeIcon}
-                        src={getStaticImageUrl(ImageSize.large, treeIcon)}
-                        alt={character[`treeName_${icon}`]}
-                    />
-                )
-            );
-        });
+        return Object.values(TalentTree)
+            .filter(t => !isNaN(Number(t)))
+            .map(icon => {
+                const treeIcon = character[`treeIcon_${icon}`];
+                return (
+                    treeIcon && (
+                        <CharImage
+                            key={treeIcon}
+                            src={getStaticImageUrl(ImageSize.large, treeIcon)}
+                            alt={character[`treeName_${icon}`]}
+                        />
+                    )
+                );
+            });
+    }, [character]);
+
+    const renderProfessionIcons = useMemo(() => {
+        if (!character) {
+            return undefined;
+        }
+        return Object.values(PrimaryProfessions)
+            .filter(t => !isNaN(Number(t)))
+            .map(icon => {
+                const tradeSkill: PrimaryTradeSkill | undefined = character[`primary_trade_skill_${icon}`];
+                return (
+                    tradeSkill && (
+                        <ProfessionIconContainer>
+                            <CharImage
+                                key={tradeSkill.icon}
+                                src={getStaticImageUrl(ImageSize.large, tradeSkill.icon)}
+                                alt={tradeSkill.icon}
+                            />
+                            {`${tradeSkill.value} / ${tradeSkill.max}`}
+                        </ProfessionIconContainer>
+                    )
+                );
+            });
     }, [character]);
 
     const renderCharDetails = useMemo(
@@ -117,14 +153,22 @@ const CharSheet: FC = () => {
                             <CharImage src={getClassIcon(character.class)} alt={String(character.class)} />
                         </SheetRow>
                         <SheetRow>{character.tname.length > 0 ? character.tname : character.name}</SheetRow>
+                        <SheetFooter>
+                            <Icon name="icon_achievements" fill={color.$Achievement} />
+                            {character.pts}
+                        </SheetFooter>
                         <SheetRow>{`<${character.guildName}>`}</SheetRow>
                         <SheetRow>{`Level: ${character.level}`}</SheetRow>
-                        <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
+                        <SheetFooter>
+                            <Icon name="icon_itemLevel" fill={color.$Achievement} />
+                            {character.avgitemlevel + " ilvl"}
+                        </SheetFooter>
                         <SheetRow>{renderTalentIcons}</SheetRow>
+                        <SheetFooter>{renderProfessionIcons}</SheetFooter>
                     </SheetRow>
                 )
             ),
-        [character, loading, errorLoading, charName, renderTalentIcons]
+        [character, loading, errorLoading, charName, renderTalentIcons, renderProfessionIcons]
     );
 
     return (

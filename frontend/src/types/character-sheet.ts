@@ -27,8 +27,8 @@ export interface CharacterSheet {
     skindata: Skindata;
     challengemode: ChallengeModes;
     healthValue: number;
-    primary_trade_skill_1: PrimaryTradeSkill;
-    primary_trade_skill_2: PrimaryTradeSkill;
+    primary_trade_skill_1?: PrimaryTradeSkill;
+    primary_trade_skill_2?: PrimaryTradeSkill;
     characterStat: CharacterStat;
     treeName_0?: string;
     treeIcon_0?: string;

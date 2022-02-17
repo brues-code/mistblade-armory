@@ -120,3 +120,8 @@ export enum TalentTree {
     Primary,
     Secondary
 }
+
+export enum PrimaryProfessions {
+    First = 1,
+    Second = 2
+}

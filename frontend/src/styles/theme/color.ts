@@ -9,6 +9,8 @@ export const color = {
     $Artifact: '#e6cc80',
     $Heirloom: '#00ccff',
 
+    $Achievement: '#f8b700',
+
     // regular colors
     $Navy_l2: '#738094'
 };
