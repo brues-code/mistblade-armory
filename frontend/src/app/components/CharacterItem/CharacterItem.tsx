@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { CharacterItem as CharacterItemType } from "types/character-item";
 import { getStaticImageUrl } from "util/get-static-image-url";
-import { ImageSize, ItemRarity } from "enums";
+import { ImageSize } from "enums";
 import { getEmptySlotIcon } from "styles/assets/load-asset";
 
 import { useApp } from "app/context/AppContext";

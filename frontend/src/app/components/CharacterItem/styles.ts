@@ -13,8 +13,3 @@ export const ItemBackground = styled.div<{ itemRarity?: ItemRarity }>`
   ${({ itemRarity }) =>
     itemRarity && `background-color: ${ItemColors[itemRarity]}`}
 `;
-
-export const ItemImg = styled.img`
-  border-radius: 15%;
-  object-fit: cover;
-`;
