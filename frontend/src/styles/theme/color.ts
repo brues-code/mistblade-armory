@@ -1,10 +1,10 @@
 export const color = {
-    $Green: '#23A623',
-    $Green_Lit: '#00F500',
-    $Red: '#B50D0D',
-    $Red_Lit: '#FF0000',
-    $Yellow: '#C2B206',
-    $Yellow_Lit: '#FFFF00',
-    $Blue: '#5454C4',
-    $Blue_Lit: '#0000FF'
+  $Poor: "#9d9d9d",
+  $Common: "#ffffff",
+  $Uncommon: "#1eff00",
+  $Rare: "#0070dd",
+  $Epic: "#a335ee",
+  $Legendary: "#ff8000",
+  $Artifact: "#e6cc80",
+  $Heirloom: "#00ccff"
 };

@@ -1,3 +1,5 @@
+import { color } from "styles/theme";
+
 export const STATIC_IMAGE_URL = "http://mop-static.tauri.hu/images/icons";
 
 export const SlotIcons = [
@@ -18,6 +20,17 @@ export const SlotIcons = [
   "Trinket",
   "Trinket",
   "MainHand",
-  "SecondaryHand",
-  "Relic"
+  "SecondaryHand"
+  // "Relic"
+];
+
+export const ItemColors = [
+  color.$Poor,
+  color.$Common,
+  color.$Uncommon,
+  color.$Rare,
+  color.$Epic,
+  color.$Legendary,
+  color.$Artifact,
+  color.$Heirloom
 ];

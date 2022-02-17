@@ -7,9 +7,11 @@ import React, {
   useMemo
 } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Oval as LoadingWheel } from "react-loader-spinner";
 
 import { ImageSize } from "enums";
 import { getStaticImageUrl } from "util/get-static-image-url";
+import { getCharacterRoute } from "util/get-route";
 import { getCharacterIcon, getClassIcon } from "styles/assets/load-asset";
 import { CharacterItem as CharacterItemType } from "types/character-item";
 
@@ -23,7 +25,6 @@ import {
   SheetWrapper,
   SheetRow
 } from "./styles";
-import { getCharacterRoute } from "util/get-route";
 
 interface SlotProps {
   item: CharacterItemType;
@@ -33,7 +34,7 @@ interface SlotProps {
 const CharSheet: FC = () => {
   const { name: paramName } = useParams<{ name: string }>();
   const navigate = useNavigate();
-  const { loadCharacterByName, character, clearCharacter } = useApp();
+  const { loadCharacterByName, character, clearCharacter, loading } = useApp();
   const [charName, setCharName] = useState(paramName || "");
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const CharSheet: FC = () => {
           leftArray.push({ item, index });
         } else if (index < 16) {
           rightArray.push({ item, index });
-        } else {
+        } else if (index < 18) {
           bottomArray.push({ item, index });
         }
       });
@@ -76,54 +77,68 @@ const CharSheet: FC = () => {
     };
   }, [character]);
 
-  const renderItem = useCallback(
-    ({ index, item }: SlotProps) => (
-      <CharacterItem key={index} item={item} index={index} />
-    ),
-    []
-  );
+  const renderItem = useCallback(({ index, item }: SlotProps) => {
+    return (
+      <CharacterItem
+        key={item.guid !== 0 ? item.guid : index}
+        item={item}
+        index={index}
+      />
+    );
+  }, []);
 
   const renderCharDetails = useCallback(
     () =>
-      character !== undefined && (
-        <SheetRow>
+      loading ? (
+        <LoadingWheel height="100" width="100" />
+      ) : (
+        character && (
           <SheetRow>
-            <img
-              width={36}
-              height={36}
-              src={getCharacterIcon(character.race, character.gender)}
-              alt={character.treeName_0}
-              style={{ paddingRight: "8px" }}
-            />
-            <img
-              width={36}
-              height={36}
-              src={getClassIcon(character.class)}
-              alt={character.treeName_0}
-            />
-          </SheetRow>
-          <SheetRow>
-            {character.tname.length > 0 ? character.tname : character.name}
-          </SheetRow>
-          <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
-          <SheetRow>
-            {character.treeIcon_0 && (
+            <SheetRow>
               <img
-                src={getStaticImageUrl(ImageSize.medium, character.treeIcon_0)}
+                width={36}
+                height={36}
+                src={getCharacterIcon(character.race, character.gender)}
                 alt={character.treeName_0}
                 style={{ paddingRight: "8px" }}
               />
-            )}
-            {character.treeIcon_1 && (
               <img
-                src={getStaticImageUrl(ImageSize.medium, character.treeIcon_1)}
-                alt={character.treeName_1}
+                width={36}
+                height={36}
+                src={getClassIcon(character.class)}
+                alt={character.treeName_0}
               />
-            )}
+            </SheetRow>
+            <SheetRow>
+              {character.tname.length > 0 ? character.tname : character.name}
+            </SheetRow>
+            <SheetRow>{`Level: ${character.level}`}</SheetRow>
+            <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
+            <SheetRow>
+              {character.treeIcon_0 && (
+                <img
+                  src={getStaticImageUrl(
+                    ImageSize.medium,
+                    character.treeIcon_0
+                  )}
+                  alt={character.treeName_0}
+                  style={{ paddingRight: "8px" }}
+                />
+              )}
+              {character.treeIcon_1 && (
+                <img
+                  src={getStaticImageUrl(
+                    ImageSize.medium,
+                    character.treeIcon_1
+                  )}
+                  alt={character.treeName_1}
+                />
+              )}
+            </SheetRow>
           </SheetRow>
-        </SheetRow>
+        )
       ),
-    [character]
+    [character, loading]
   );
 
   return (
@@ -136,20 +151,14 @@ const CharSheet: FC = () => {
         />
         <Button onClick={loadChar}>Load character</Button>
       </InputContainer>
-      {character && (
-        <>
-          <div
-            style={{ display: "flex", paddingBottom: "8px", width: "512px" }}
-          >
-            <SheetRow>{leftItems.map(renderItem)}</SheetRow>
-            {renderCharDetails()}
-            <SheetRow>{rightItems.map(renderItem)}</SheetRow>
-          </div>
-          <SheetRow style={{ display: "flex", justifyContent: "center" }}>
-            {bottomItems.map(renderItem)}
-          </SheetRow>
-        </>
-      )}
+      <div style={{ display: "flex", paddingBottom: "8px", width: "512px" }}>
+        <SheetRow>{leftItems.map(renderItem)}</SheetRow>
+        {renderCharDetails()}
+        <SheetRow>{rightItems.map(renderItem)}</SheetRow>
+      </div>
+      <SheetRow style={{ display: "flex", justifyContent: "center" }}>
+        {bottomItems.map(renderItem)}
+      </SheetRow>
     </SheetWrapper>
   );
 };
