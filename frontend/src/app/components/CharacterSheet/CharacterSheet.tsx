@@ -78,7 +78,11 @@ const CharSheet: FC = () => {
             const treeIcon = character[`treeIcon_${icon}`];
             return (
                 treeIcon && (
-                    <CharImage src={getStaticImageUrl(ImageSize.large, treeIcon)} alt={character[`treeName_${icon}`]} />
+                    <CharImage
+                        key={treeIcon}
+                        src={getStaticImageUrl(ImageSize.large, treeIcon)}
+                        alt={character[`treeName_${icon}`]}
+                    />
                 )
             );
         });
