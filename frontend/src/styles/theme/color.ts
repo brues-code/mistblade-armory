@@ -1,4 +1,5 @@
 export const color = {
+    // item quality colors
     $Poor: '#9d9d9d',
     $Common: '#ffffff',
     $Uncommon: '#1eff00',
@@ -6,5 +7,8 @@ export const color = {
     $Epic: '#a335ee',
     $Legendary: '#ff8000',
     $Artifact: '#e6cc80',
-    $Heirloom: '#00ccff'
+    $Heirloom: '#00ccff',
+
+    // regular colors
+    $Navy_l2: '#738094'
 };

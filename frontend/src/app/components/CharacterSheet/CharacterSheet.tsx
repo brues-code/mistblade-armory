@@ -12,6 +12,7 @@ import { useApp } from 'app/context/AppContext';
 import CharacterItem from 'app/components/CharacterItem';
 import Icon from 'app/components/Icon';
 
+import { color } from 'styles/theme';
 import { Button, CharImage, Input, InputContainer, SheetBody, SheetFooter, SheetRow, SheetWrapper } from './styles';
 
 interface SlotProps {
@@ -114,8 +115,9 @@ const CharSheet: FC = () => {
         <SheetWrapper>
             <InputContainer>
                 <Input value={charName} onChange={e => setCharName(e.target.value)} onKeyDown={handleKeyDown} />
-                <Button onClick={loadChar}>Load char</Button>
-                <Icon name="icon_proofs" fill="#acb4bf" />
+                <Button onClick={loadChar}>
+                    <Icon name="icon_search" fill={color.$Navy_l2} />
+                </Button>
             </InputContainer>
             <SheetBody>
                 <SheetRow>{leftItems.map(renderItem)}</SheetRow>
