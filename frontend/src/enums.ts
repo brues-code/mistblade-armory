@@ -96,22 +96,27 @@ export enum ImageSize {
 }
 
 export enum ItemSlot {
-    'Head',
-    'Neck',
-    'Shoulder',
-    'Back',
-    'Chest',
-    'Shirt',
-    'Tabard',
-    'Wrists',
-    'Hands',
-    'Waist',
-    'Legs',
-    'Feet',
-    'Finger1',
-    'Finger2',
-    'Trinket1',
-    'Trinket2',
-    'MainHand',
-    'SecondaryHand'
+    Head,
+    Neck,
+    Shoulder,
+    Back,
+    Chest,
+    Shirt,
+    Tabard,
+    Wrists,
+    Hands,
+    Waist,
+    Legs,
+    Feet,
+    Finger1,
+    Finger2,
+    Trinket1,
+    Trinket2,
+    MainHand,
+    SecondaryHand
+}
+
+export enum TalentTree {
+    Primary,
+    Secondary
 }

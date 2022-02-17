@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, KeyboardEvent, useEffect, useMemo, Re
 import { useParams, useNavigate } from 'react-router-dom';
 import { Oval as LoadingWheel } from 'react-loader-spinner';
 
-import { ImageSize, ItemSlot } from 'enums';
+import { ImageSize, ItemSlot, TalentTree } from 'enums';
 import { getStaticImageUrl } from 'util/get-static-image-url';
 import { getCharacterRoute } from 'util/get-route';
 import { getCharacterIcon, getClassIcon } from 'styles/assets/load-asset';
@@ -86,7 +86,7 @@ const CharSheet: FC = () => {
         if (!character) {
             return undefined;
         }
-        return [0, 1].map(icon => {
+        return [TalentTree.Primary, TalentTree.Secondary].map(icon => {
             const treeIcon = character[`treeIcon_${icon}`];
             return (
                 treeIcon && (
