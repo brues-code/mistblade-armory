@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useState, KeyboardEvent, useEffect, useMemo, ReactNode } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { FC, KeyboardEvent, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Oval as LoadingWheel } from 'react-loader-spinner';
 
-import { ImageSize, ItemSlot, PrimaryProfessions, TalentTree } from 'enums';
+import { Class, ImageSize, ItemSlot, PrimaryProfessions, TalentTree } from 'enums';
 import { ItemInventoryArrangement } from 'app-constants';
-import { getStaticImageUrl } from 'util/get-static-image-url';
+import { getBlizzBGUrl, getStaticImageUrl } from 'util/get-static-image-url';
 import { getCharacterRoute } from 'util/get-route';
 import { getCharacterIcon, getClassIcon } from 'styles/assets/load-asset';
 import { CharacterItem as CharacterItemType } from 'types/character-item';
@@ -161,7 +161,7 @@ const CharSheet: FC = () => {
                         <SheetRow>{`Level: ${character.level}`}</SheetRow>
                         <SheetFooter>
                             <Icon name="icon_itemLevel" fill={color.$Achievement} />
-                            {character.avgitemlevel + " ilvl"}
+                            {character.avgitemlevel + ' ilvl'}
                         </SheetFooter>
                         <SheetRow>{renderTalentIcons}</SheetRow>
                         <SheetFooter>{renderProfessionIcons}</SheetFooter>
@@ -171,8 +171,10 @@ const CharSheet: FC = () => {
         [character, loading, errorLoading, charName, renderTalentIcons, renderProfessionIcons]
     );
 
+    console.log(getBlizzBGUrl((character && character.class - 1) || Class.DeathKnight));
+
     return (
-        <SheetWrapper>
+        <SheetWrapper classId={character?.class}>
             <InputContainer>
                 <Input
                     value={charName}

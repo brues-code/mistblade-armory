@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Class } from '../../../enums';
+import { getBlizzBGUrl } from '../../../util/get-static-image-url';
 
 export const Input = styled.input`
     margin-right: 4px;
@@ -25,10 +27,15 @@ export const InputContainer = styled.div`
     width: 100%;
 `;
 
-export const SheetWrapper = styled.div`
+export const SheetWrapper = styled.div<{ classId?: Class }>`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    ${props =>
+        props.classId &&
+        `background-position: center; background-repeat: no-repeat; background-image: url(${getBlizzBGUrl(
+            props.classId - 1
+        )}`} );
 `;
 
 export const SheetRow = styled.div`
@@ -39,7 +46,6 @@ export const SheetRow = styled.div`
 export const SheetBody = styled.div`
     display: flex;
     padding-bottom: 8px;
-    width: 512px;
 `;
 
 export const SheetFooter = styled(SheetRow)`

@@ -19,7 +19,5 @@ export const MiddleWrapper = styled.div`
 export const InnerContent = styled.div`
     width: 675px;
     max-width: 100vw;
-    background-color: rgba(242, 242, 242, 1);
     margin: 0 auto;
-    padding: 16px;
 `;

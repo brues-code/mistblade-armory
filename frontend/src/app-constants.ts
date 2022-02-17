@@ -3,6 +3,7 @@ import { ItemSlot } from 'enums';
 import { ReactNode } from 'react';
 
 export const STATIC_IMAGE_URL = 'http://mop-static.tauri.hu/images/icons';
+export const BLIZZ_STATIC_IMAGE_URL = 'https://render.worldofwarcraft.com/us/profile-backgrounds/v2';
 
 export const SlotIcons = [
     'Head',
@@ -60,3 +61,25 @@ export const ItemInventoryArrangement = {
     ],
     bottomItems: [ItemSlot.MainHand, ItemSlot.SecondaryHand]
 };
+
+export const AlignmentIndex = {
+    leftAligned: [...ItemInventoryArrangement.leftItems, ItemSlot.SecondaryHand],
+    rightAligned: [...ItemInventoryArrangement.leftItems, ItemSlot.MainHand]
+};
+
+interface ClassStringProps {
+    [key: number]: string;
+}
+export const ClassStrings: ClassStringProps = [
+    'warrior',
+    'paladin',
+    'hunter',
+    'rogue',
+    'priest',
+    'death_knight',
+    'shaman',
+    'mage',
+    'warlock',
+    'monk',
+    'druid'
+];
