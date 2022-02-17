@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { CharacterItem as CharacterItemType } from "types/character-item";
 import { getStaticImageUrl } from "util/get-static-image-url";
@@ -15,13 +15,17 @@ interface Props {
 }
 
 const CharItem: FC<Props> = ({ item, index }) => {
-  const { loading } = useApp();
+  const { loading, errorLoading } = useApp();
+  const properlyLoaded = useMemo(() => !loading && !errorLoading, [
+    loading,
+    errorLoading
+  ]);
   return (
     <ItemContainer>
-      <ItemBackground itemRarity={loading ? undefined : item.rarity}>
+      <ItemBackground itemRarity={properlyLoaded ? item.rarity : undefined}>
         <img
           src={
-            item.icon && item.icon.length > 0 && !loading
+            item.icon && item.icon.length > 0 && properlyLoaded
               ? getStaticImageUrl(ImageSize.large, item.icon)
               : getEmptySlotIcon(index)
           }

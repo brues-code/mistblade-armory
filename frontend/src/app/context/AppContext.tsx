@@ -13,6 +13,7 @@ import getCharSheet from "app/api/fetch-character-data";
 interface State {
   character?: CharacterSheet;
   loading: boolean;
+  errorLoading: boolean;
 }
 
 interface ApiProps {
@@ -26,7 +27,8 @@ const initialState: AppState = {
   character: undefined,
   loadCharacterByName: () => null,
   clearCharacter: () => null,
-  loading: false
+  loading: false,
+  errorLoading: false
 };
 
 export const AppContext = createContext(initialState);
@@ -34,20 +36,31 @@ export const AppContext = createContext(initialState);
 const AppContextProvider: FC = ({ children }) => {
   const [character, setCharacter] = useState<CharacterSheet>();
   const [loading, setLoading] = useState(false);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   const loadCharacterByName = useCallback((name: string) => {
     setLoading(true);
+    setErrorLoading(false);
     getCharSheet(name)
       .then(setCharacter)
-      .then(() => setLoading(false))
-      .catch(console.log);
+      .catch(err => {
+        console.error(err);
+        setErrorLoading(true);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const clearCharacter = useCallback(() => setCharacter(undefined), []);
 
   const contextState: AppState = useMemo(
-    () => ({ character, loadCharacterByName, clearCharacter, loading }),
-    [loadCharacterByName, character, clearCharacter, loading]
+    () => ({
+      character,
+      loadCharacterByName,
+      clearCharacter,
+      loading,
+      errorLoading
+    }),
+    [loadCharacterByName, character, clearCharacter, loading, errorLoading]
   );
 
   return (

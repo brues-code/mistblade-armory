@@ -34,7 +34,13 @@ interface SlotProps {
 const CharSheet: FC = () => {
   const { name: paramName } = useParams<{ name: string }>();
   const navigate = useNavigate();
-  const { loadCharacterByName, character, clearCharacter, loading } = useApp();
+  const {
+    loadCharacterByName,
+    character,
+    clearCharacter,
+    loading,
+    errorLoading
+  } = useApp();
   const [charName, setCharName] = useState(paramName || "");
 
   useEffect(() => {
@@ -91,6 +97,8 @@ const CharSheet: FC = () => {
     () =>
       loading ? (
         <LoadingWheel height="100" width="100" />
+      ) : errorLoading ? (
+        <SheetRow>Unable to load character</SheetRow>
       ) : (
         character && (
           <SheetRow>
