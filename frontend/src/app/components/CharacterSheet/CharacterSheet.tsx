@@ -13,7 +13,6 @@ import CharacterItem from 'app/components/CharacterItem';
 import Icon from 'app/components/Icon';
 
 import { Button, CharImage, Input, InputContainer, SheetBody, SheetFooter, SheetRow, SheetWrapper } from './styles';
-import { color } from '../../../styles/theme';
 
 interface SlotProps {
     item: CharacterItemType;

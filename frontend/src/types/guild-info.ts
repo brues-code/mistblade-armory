@@ -1,7 +1,7 @@
-import { Faction } from "../enums";
+import { Faction } from '../enums';
 
 export interface GuildInfo {
-  name: string;
-  faction: Faction;
-  leadername: string;
+    name: string;
+    faction: Faction;
+    leadername: string;
 }

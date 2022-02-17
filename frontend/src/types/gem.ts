@@ -1,7 +1,7 @@
-import { GemColor } from "../enums";
+import { GemColor } from '../enums';
 
 export interface Gem {
-  enchantid: number;
-  id: number;
-  gemcolor: GemColor;
+    enchantid: number;
+    id: number;
+    gemcolor: GemColor;
 }

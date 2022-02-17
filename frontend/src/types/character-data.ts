@@ -1,11 +1,11 @@
-import { Class, Faction, Gender, Race } from "../enums";
+import { Class, Faction, Gender, Race } from '../enums';
 
 export interface CharacterData {
-  charname: string;
-  race: Race;
-  class: Class;
-  gender: Gender;
-  guildname: string;
-  level: number;
-  faction: Faction;
+    charname: string;
+    race: Race;
+    class: Class;
+    gender: Gender;
+    guildname: string;
+    level: number;
+    faction: Faction;
 }
