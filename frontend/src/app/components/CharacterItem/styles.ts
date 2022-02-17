@@ -9,7 +9,10 @@ export const ItemContainer = styled.div`
 `;
 
 export const ItemBackground = styled.div<{ itemRarity?: ItemRarity }>`
-  padding: 4px 4px 0 4px;
+  display: flex;
+  border-radius: 10%;
+  padding: 4px;
+  margin: 4px;
   ${({ itemRarity }) =>
     itemRarity && `background-color: ${ItemColors[itemRarity]}`}
 `;
