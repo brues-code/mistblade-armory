@@ -1,70 +1,81 @@
 {
-  "name": "mistblade-armory",
-  "version": "0.1.0",
-  "private": true,
-  "proxy": "http://localhost:8001",
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "express": "^4.17.2",
-    "lodash": "^4.17.21",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
-    "react-loader-spinner": "^5.1.4",
-    "react-router": "^6.2.1",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "styled-components": "^5.3.3",
-    "ts-loader": "^6.2.1",
-    "tslint": "^5.20.1",
-    "tslint-react": "^4.1.0",
-    "typescript": "^4.5.5",
-    "web-vitals": "^2.1.4"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.4.0",
-    "@types/lodash": "^4.14.178",
-    "@types/material-ui": "^0.21.12",
-    "@types/node": "^16.11.24",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
-    "@types/react-helmet": "^6.1.5",
-    "@types/styled-components": "^5.1.22",
-    "cors": "^2.8.5",
-    "css-loader": "^3.3.0",
-    "gh-pages": "^2.1.1",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1",
-    "request": "^2.88.2",
-    "style-loader": "^1.0.1",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript-plugin-styled-components": "^1.4.3",
-    "underscore": "^1.13.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "mistblade-armory",
+    "version": "0.1.0",
+    "private": true,
+    "proxy": "http://localhost:8001",
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.16.2",
+        "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
+        "express": "^4.17.2",
+        "eslint": "^7.30.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-react": "^7.24.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "lodash": "^4.17.21",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-helmet": "^6.1.0",
+        "react-loader-spinner": "^5.1.4",
+        "react-router": "^6.2.1",
+        "react-router-dom": "^6.2.1",
+        "react-scripts": "5.0.0",
+        "styled-components": "^5.3.3",
+        "svg4everybody": "^2.1.9",
+        "ts-loader": "^6.2.1",
+        "typescript": "^4.5.5",
+        "web-vitals": "^2.1.4"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.4.0",
+        "@types/lodash": "^4.14.178",
+        "@types/material-ui": "^0.21.12",
+        "@types/node": "^16.11.24",
+        "@types/react": "^17.0.39",
+        "@types/react-dom": "^17.0.11",
+        "@types/react-helmet": "^6.1.5",
+        "@types/styled-components": "^5.1.22",
+        "@types/svg4everybody": "^2.1.2",
+        "cors": "^2.8.5",
+        "css-loader": "^3.3.0",
+        "gh-pages": "^2.1.1",
+        "husky": "^7.0.4",
+        "prettier": "^1.19.1",
+        "pretty-quick": "^2.0.1",
+        "request": "^2.88.2",
+        "style-loader": "^1.0.1",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript-plugin-styled-components": "^1.4.3",
+        "underscore": "^1.13.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    }
 }
