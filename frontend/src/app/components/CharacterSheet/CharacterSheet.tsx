@@ -120,6 +120,7 @@ const CharSheet: FC = () => {
             <SheetRow>
               {character.tname.length > 0 ? character.tname : character.name}
             </SheetRow>
+            <SheetRow>{`<${character.guildName}>`}</SheetRow>
             <SheetRow>{`Level: ${character.level}`}</SheetRow>
             <SheetRow>{`Item Level: ${character.avgitemlevel}`}</SheetRow>
             <SheetRow>
