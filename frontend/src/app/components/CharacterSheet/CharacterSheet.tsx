@@ -1,8 +1,8 @@
-import React, { FC, useCallback, useState, KeyboardEvent, useEffect, useMemo } from 'react';
+import React, { FC, useCallback, useState, KeyboardEvent, useEffect, useMemo, ReactNode } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Oval as LoadingWheel } from 'react-loader-spinner';
 
-import { ImageSize } from 'enums';
+import { ImageSize, ItemSlot } from 'enums';
 import { getStaticImageUrl } from 'util/get-static-image-url';
 import { getCharacterRoute } from 'util/get-route';
 import { getCharacterIcon, getClassIcon } from 'styles/assets/load-asset';
@@ -14,10 +14,17 @@ import Icon from 'app/components/Icon';
 
 import { color } from 'styles/theme';
 import { Button, CharImage, Input, InputContainer, SheetBody, SheetFooter, SheetRow, SheetWrapper } from './styles';
+import { ItemInventoryArrangement } from 'app-constants';
 
 interface SlotProps {
     item: CharacterItemType;
     index: number;
+}
+
+interface InventoryArrangementProps {
+    leftItems: ReactNode[];
+    rightItems: ReactNode[];
+    bottomItems: ReactNode[];
 }
 
 const CharSheet: FC = () => {
@@ -49,32 +56,31 @@ const CharSheet: FC = () => {
         [loadChar]
     );
 
-    const { leftItems, rightItems, bottomItems } = useMemo(() => {
-        const leftArray: Array<SlotProps> = [];
-        const rightArray: Array<SlotProps> = [];
-        const bottomArray: Array<SlotProps> = [];
+    const renderItem = useCallback(
+        ({ index, item }: SlotProps) => (
+            <CharacterItem key={item.guid !== 0 ? item.guid : index} item={item} index={index} />
+        ),
+        []
+    );
+
+    const itemArrays = useMemo(() => {
+        const arrangements: InventoryArrangementProps = {
+            leftItems: [],
+            rightItems: [],
+            bottomItems: []
+        };
 
         if (character) {
-            character.characterItems.forEach((item, index) => {
-                if (index < 8) {
-                    leftArray.push({ item, index });
-                } else if (index < 16) {
-                    rightArray.push({ item, index });
-                } else if (index < 18) {
-                    bottomArray.push({ item, index });
-                }
+            Object.keys(arrangements).forEach(key => {
+                ItemInventoryArrangement[key].forEach((index: ItemSlot) => {
+                    const item = character.characterItems[index];
+                    arrangements[key].push(renderItem({ item, index }));
+                });
             });
         }
-        return {
-            leftItems: leftArray,
-            rightItems: rightArray,
-            bottomItems: bottomArray
-        };
-    }, [character]);
 
-    const renderItem = useCallback(({ index, item }: SlotProps) => {
-        return <CharacterItem key={item.guid !== 0 ? item.guid : index} item={item} index={index} />;
-    }, []);
+        return arrangements;
+    }, [character, renderItem]);
 
     const renderTalentIcons = useMemo(() => {
         if (!character) {
@@ -135,11 +141,11 @@ const CharSheet: FC = () => {
                 </Button>
             </InputContainer>
             <SheetBody>
-                <SheetRow>{leftItems.map(renderItem)}</SheetRow>
+                <SheetRow>{itemArrays.leftItems}</SheetRow>
                 {renderCharDetails}
-                <SheetRow>{rightItems.map(renderItem)}</SheetRow>
+                <SheetRow>{itemArrays.rightItems}</SheetRow>
             </SheetBody>
-            <SheetFooter>{bottomItems.map(renderItem)}</SheetFooter>
+            <SheetFooter>{itemArrays.bottomItems}</SheetFooter>
         </SheetWrapper>
     );
 };
