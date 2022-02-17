@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import svg4Everybody from 'svg4everybody';
-const icons = require('styles/resources/icons.svg');
+
+const icons = require('styles/resources/icons.svg').default;
 
 svg4Everybody();
 
