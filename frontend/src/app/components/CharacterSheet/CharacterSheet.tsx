@@ -118,7 +118,12 @@ const CharSheet: FC = () => {
     return (
         <SheetWrapper>
             <InputContainer>
-                <Input value={charName} onChange={e => setCharName(e.target.value)} onKeyDown={handleKeyDown} />
+                <Input
+                    value={charName}
+                    onChange={e => setCharName(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={'Enter name'}
+                />
                 <Button onClick={loadChar}>
                     <Icon name="icon_search" fill={color.$Navy_l2} />
                 </Button>
