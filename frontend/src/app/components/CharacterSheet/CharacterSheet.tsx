@@ -30,6 +30,12 @@ const CharSheet: FC = () => {
         paramName ? loadCharacterByName(paramName) : clearCharacter();
     }, [loadCharacterByName, paramName, clearCharacter]);
 
+    useEffect(() => {
+        if (character?.name) {
+            setCharName(character?.name);
+        }
+    }, [character?.name]);
+
     const loadChar = useCallback(() => {
         navigate(getCharacterRoute(charName));
     }, [charName, navigate]);
