@@ -43,9 +43,9 @@ const CharSheet: FC = () => {
     );
 
     const { leftItems, rightItems, bottomItems } = useMemo(() => {
-        let leftArray: Array<SlotProps> = [];
-        let rightArray: Array<SlotProps> = [];
-        let bottomArray: Array<SlotProps> = [];
+        const leftArray: Array<SlotProps> = [];
+        const rightArray: Array<SlotProps> = [];
+        const bottomArray: Array<SlotProps> = [];
 
         if (character) {
             character.characterItems.forEach((item, index) => {
